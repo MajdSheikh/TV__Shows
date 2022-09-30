@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+             a {
+            display: flex;
+            justify-content: end;
+            margin: 10px;
+        }
+        form {
+            margin:  auto;
+            display: flex;
+            align-items: center;
+            
+            flex-direction: column;
+            
+        }
+        .title {
+            width: 400px;
+            border: 2px solid black;
+        }
+        label {
+            font-size: larger;
+            font-weight: bolder;
+        }
+        .label {
+            border: 2px solid black;
+            
+        }
+        .submit {
+            box-shadow: 3px 3px;
+            background-color: white;
+        }
+
+    </style>
+</head>
+<body>
+    <a href="/shows/{show_id}/update">Go Back</a>
+    <div>
+        <form method="POST" action="/shows/{{this_show.id}}/update/">
+            {% csrf_token %}
+            <div>
+            <h1>Edit show {{this_show.id}}</h1>
+            </div><br>
+            <div>
+                <label>Title</label><br>
+                <input type="text" name="title" value="{{this_show.title}}" class="title">
+            </div><br>
+            <div>
+                <label>Network</label><br>
+                <input type="text" name="network" value="{{this_show.network}}" class="label">
+
+                <label>Release date</label>
+                <input type="date" name="release_date" value="{{this_show_release_date}}" class="label">
+            </div><br>
+            <div>
+                <label for="description">Description</label><br>
+                <textarea name="description" id="description" cols="50" rows="10" class="label">{{this_show.description}}</textarea>
+            </div><br>
+            <div>
+                <input type="submit" value="Update" class="submit">
+            </div>
+            <div>
+                <a href="/shows/{{this_show.id}}/">Go to show</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

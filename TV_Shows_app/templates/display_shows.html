@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wholePage {
+            margin-left: 100px;
+        }
+        .firstLink {
+            display: flex;
+            justify-content: end;
+            margin: 10px;
+        }
+        p {
+            font-size: larger;
+        }
+
+    </style>
+</head>
+<body>
+    <a href="/shows/new/" class="firstLink">Go Back</a>
+    <div class="wholePage">
+        <!-- <form method="POST" action="/shows/this_show.id">
+            {% csrf_token %} -->
+
+            <div>
+            <h1>TV Show {{this_show.id}}</h1>
+            </div>
+            <div>
+                <p>Title: {{this_show.title}}</p>
+            </div>
+            <div>
+                <p>Network: {{this_show.network}}</p>
+            </div>
+            <div>
+            <p>Release date: {{this_show.release_date}}</p>
+            </div>
+            <div>
+                <p>Description: {{this_show.description}}</p>
+            </div>
+            <br>
+            <div>
+                <p>Last updated: {{this_show.updated_at}}</p>
+            </div>
+        <!-- </form> -->
+            <a href="/shows/{{this_show.id}}/edit">Edit|</a>
+            <a href="/shows/{{this_show.id}}/destroy">Delete</a>
+    </div>
+    
+</body>
+</body>
+</html>
