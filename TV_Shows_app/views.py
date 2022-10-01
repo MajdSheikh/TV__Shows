@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Show
+from django.contrib import messages
 
 def index(request):
     context = {
@@ -15,15 +16,21 @@ def shows_new(request):
 
 
 def create_shows(request):
-    this_show = Show.objects.create(title=request.POST["title"], network=request.POST["network"], 
-    description=request.POST["description"],  release_date=request.POST["release_date"])
+    if request.method =='POST':
+        errors = Show.objects.basic_validator(request.POST)
+        if len(errors) > 0:
+            for key, value in errors.items():
+                messages.error(request, value)
+            return redirect("/shows/new/")
 
-    return redirect("/shows/"+str(this_show.id)+"/")
+        else:
 
-# def display_all_shows(request):
-#         Show.objects.all()
+            this_show = Show.objects.create(title=request.POST["title"], network=request.POST["network"], 
+            description=request.POST["description"],  release_date=request.POST["release_date"])
+            messages.success(request, "Show successfully created")
 
-#         return redirect("/")
+            return redirect("/shows/" + str(this_show.id) + "/")
+
 
 
 def display_shows(request, show_id):
@@ -42,16 +49,24 @@ def edit_show(request, show_id):
 
 
 def update_show(request, show_id):
-
     this_show = Show.objects.get(id=show_id)
+    if request.method=='POST':
+        errors = Show.objects.basic_validator(request.POST)
+        if len(errors) > 0:
+            for key, value in errors.items():
+                messages.error(request, value)
+            return redirect("/shows/" + str(this_show.id) + "/edit")
 
-    this_show.title=request.POST['title']
-    this_show.network=request.POST['network']
-    this_show.release_date=request.POST['release_date']
-    this_show.description=request.POST['description']
-    this_show.save()
+        else:
 
-    return redirect('/shows/' + str(this_show.id))
+            this_show.title=request.POST['title']
+            this_show.network=request.POST['network']
+            this_show.release_date=request.POST['release_date']
+            this_show.description=request.POST['description']
+            this_show.save()
+            messages.success(request, "Show successfully updated")
+
+            return redirect('/shows/' + str(this_show.id))
 
 def destroy_show(request, show_id):
     this_show = Show.objects.get(id=show_id)

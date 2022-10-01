@@ -39,7 +39,7 @@
     </style>
 </head>
 <body>
-    <a href="/shows/{show_id}/update">Go Back</a>
+    <a href="/shows/{{this_show.id}}/">Go Back</a>
     <div>
         <form method="POST" action="/shows/{{this_show.id}}/update/">
             {% csrf_token %}
@@ -69,5 +69,12 @@
             </div>
         </form>
     </div>
+    {% if messages %}
+    <ul class="messages">    
+        {% for message in messages %}    
+        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+        {% endfor %}
+    </ul>
+    {% endif %}
 </body>
 </html>
